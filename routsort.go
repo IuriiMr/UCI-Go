@@ -42,9 +42,10 @@ func main() {
 	go Sort(&wg, input[quarter*3:], ch)
 
 	wg.Wait()
+	close(ch)
 	var result []int
-	for i:=0 ; i < 4 ; i ++ {
-		result = append(result, <-ch...)
+	for sli := range ch {
+		result = append(result, sli...)
 	}
 	sort.Ints(result)
 	fmt.Println(result)
